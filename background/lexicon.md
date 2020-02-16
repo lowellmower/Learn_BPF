@@ -4,7 +4,6 @@
 
 
 ## B
-
 - #### BPF Byte Code:
 Often, the BPF virtual machine and the BPF bytecode are sometims referred to interchangably. BPF bytecode is an instruction set which       
 is interpreted by a compiler for execution in the kernel. It can be precompiled or interpreted with a JIT. Some Linux distrobutions, in 
@@ -18,6 +17,10 @@ there isn't. With JIT compiled code, instructions run directly on the processor 
 
 ## C
 
+- #### Classic BPF:
+The first implementation designed for BSD on 32-bit system and then ultimately adopted into Linux kernel (`v2.1.75`). It is this more 
+limited system confined to 2 registers and 16 memory slots and geared specifically toward network packets we are referring to when we
+say "classic BPF" or the distinction between BPF and eBPF.
 
 ## D
 
