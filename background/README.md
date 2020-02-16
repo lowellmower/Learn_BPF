@@ -13,12 +13,12 @@ to the topic, [BPF Perfomrance Tools Linux System and Application Observability]
 ### BPF History to Today
 
 BPF was originally design specifically for the Berkely Software Distribution (BSD) operating system. Seems
-obvious, no? It was introduced in 1992 in a paper about the architecture surrounding packet capturing at
-the user level, specifically with respect to the througput of UDP/IP packets on the DECstation 5000. This
-original implementation was relatively straight forward, [BPF byte code](./lexicon.md#bpf-byte-code) was 
-used to define a set of filter instructions and loaded into the kernel. All packets coming in from network
-devices would then have these filters applied before being returned up to user space by the implementing 
-program (think tcpdump).
+obvious, no? [It was introduced in 1992 in a paper](http://www.tcpdump.org/papers/bpf-usenix93.pdf) about
+the architecture surrounding packet capturing at the user level, specifically with respect to the througput
+of UDP/IP packets on the DECstation 5000. This original implementation was relatively straight forward, 
+[BPF byte code](./lexicon.md#bpf-byte-code) was used to define a set of filter instructions and loaded into
+the kernel. All packets coming in from network devices would then have these filters applied before being
+returned up to user space by the implementing program (think tcpdump).
 
 This original implementation consisted only of two registers, a scratch memory store with 16 slots, and a
 program counter all operating under a 32-bit register. It wasn't until 1997 that this version of BPF would
