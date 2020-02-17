@@ -56,6 +56,18 @@ Two types of interest and which should be of recognizable structure would be the
 `BPF_MAP_TYPE_HASH` which supplies a key/value pair and `BPF_MAP_TYPE_ARRAY` which will supply an array of
 elements.
 
+## BPF Sys Interface
+
+This is an aspect of BPF I'm very interested in. Post Linux `4.4`, BPF introduced command to expose programs
+and maps by way of the virtual file system under `/sys/fs/bpf`. This capability is called pinning and allows
+users to more easily make daemon like tools which can run in the background. The ability to aggregate and
+persist data over longer periods of time seems incredibly valuable. This also exposes another point of contact
+between user space and the BPF program in the kernel by allowing users to read from and write to BPF maps from
+here.
+
+A good example of pinning can be found in the android operating system where eBPF programs are loaded on boot
+and then exposed an interface via `/sys/fs`. For the curious, some more detail can be found [here](https://source.android.com/devices/architecture/kernel/bpf#files_available_in_sysfs).
+
 ## BPF Runtime
 
 ```
