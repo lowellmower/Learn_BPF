@@ -39,6 +39,23 @@ user space and the kernel in a safe and accessible way.
 Generally, BPF now refers to this "extended" world and makes no distinction (unless necessary) between classic
 BPF and eBPF.
 
+## Program Types
+
+There are a number of different types of programs BPF can load which signal which types of events a program
+will attach to. For example, if one is to attach a program to a kernel probe the BPF program type to be used
+would be `BPF_PROG_TYPE_KPROBE`. Another program type which I personally find of interest and look forward to
+experimenting with is `BPF_PROG_TYPE_XDP` used for express data path programs. For the most up to date list
+of all supported program type, [iovisor/bcc](https://github.com/iovisor/bcc/blob/master/docs/kernel-versions.md#program-types) seems a good source of truth.
+
+## Map Types
+
+One of the true super powers of BPF is the map data structure which can be used. There are a number of map
+types which are supported and a good source of truth for the most current is probably the linux source at
+[bpf.h](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/bpf.h).
+Two types of interest and which should be of recognizable structure would be the hash-table map type called
+`BPF_MAP_TYPE_HASH` which supplies a key/value pair and `BPF_MAP_TYPE_ARRAY` which will supply an array of
+elements.
+
 ## BPF Runtime
 
 ```
