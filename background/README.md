@@ -12,7 +12,7 @@ to the topic, [BPF Perfomrance Tools Linux System and Application Observability]
 ## Background
 ### BPF History to Today
 
-BPF was originally design specifically for the Berkely Software Distribution (BSD) operating system. Seems
+BPF was originally designed specifically for the Berkely Software Distribution (BSD) operating system. Seems
 obvious, no? [It was introduced in 1992 in a paper](http://www.tcpdump.org/papers/bpf-usenix93.pdf) about
 the architecture surrounding packet capturing at the user level, specifically with respect to the througput
 of UDP/IP packets on the DECstation 5000. This original implementation was relatively straight forward, 
@@ -38,6 +38,42 @@ user space and the kernel in a safe and accessible way.
 
 Generally, BPF now refers to this "extended" world and makes no distinction (unless necessary) between classic
 BPF and eBPF.
+
+## BPF Runtime
+
+```
+
+Kernel
+
+   +------------------+      +--------------+                               +-------------------------+
+   |                  |      |              |        bpf_jit_enabled        | BPF Helpers             |
+   | BPF Instructions |----->| BPF Verifier |--------+-------------+        |                         |
+   |                  |      |              |        |             |        |  bpf_get_current_comm() |
+   +------------------+      +--------------+        |            YES       |                         |
+                                 /                   |             |        +-------------------------+
+                                /                    |         +---+-----+      /\   /
+                               x                     NO        | BPF JIT |      /   /
+                            Rejected                 |         +---+-----+     /   /
+                                                     |             |          /   /
+   +-------------------------------------------------+-------------+---------/---/----------------+
+   | BPF Virtual Machine                             |             |        /   /                 |
+   |                                                 |             |       /   /                  |   +--------+
+   |   +-----------+                                 |             |      /   \/     +---------+  |   | Events |
+   |   | [R0] [R5] |                      +----------+-------------+------------+    | BPF     |<-+---+        |
+   |   | [R1] [R6] |                      |          |             |            |<---| Context |  |   |        |
+   |   | [R2] [R7] |                      |          V             V            |    +---------+  |   |        |
+   |   | [R3] [R8] |  <---------------->  |  +------------+     +-------------+ |                 |   +--------+
+   |   | [R4] [R9] |                      |  | Interpreter|     | Native      | |                 |
+   |   |   [R10]   |                      |  +------------+     | Instructions| |                 |
+   |   |  64-bit   |                      |                     +-------------+ |                 |
+   |   | registers |                      +-------------------------------------+                 |   +----------+
+   |   +-----------+                              /\            \/                                |   | BPF      |
+   |                           +-----+ +------------------+ +---------------+                     |   | Syscalls |
+   |                           | Map | | Map              | | Map           | <-------------------+-->|          |
+   |                           |     | |                  | |               |                     |   |          |
+   |                           +-----+ +------------------+ +---------------+                     |   |          |
+   +----------------------------------------------------------------------------------------------+   +----------+
+```
 
 ## Lexicon
 
